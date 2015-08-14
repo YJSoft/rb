@@ -26,8 +26,8 @@
 		</thead>
 		<tbody>
 	<?php 
-	$i = 0; $result = mysql_db_query($DB['name'], "SHOW FIELDS FROM $Xtbl");
-	while ($row = db_fetch_array($result)) :$i++;
+	$i = 0; $result = mysqli_query($DB_CONNECT, "SHOW FIELDS FROM $Xtbl");
+	while ($row = mysqli_fetch_array($result)) :$i++;
 
 		$field_name = $row[0];
 		$field_kind = explode("(", $row[1]);
@@ -174,7 +174,7 @@
 					<select name="field_nav" STYLE="width:180px;">
 					<option value="->">테이블의 마지막</option>
 					<option value="<-">테이블의 처음</option>
-					<?php $result1 = mysql_db_query($DB['name'], "SHOW FIELDS FROM $Xtbl");while ($row1 = mysql_fetch_array($result1)) :?>
+					<?php $result1 = mysqli_query($DB_CONNECT, "SHOW FIELDS FROM $Xtbl");while ($row1 = mysqli_fetch_array($result1)) :?>
 					<option value="<?php echo $row1[0]?>"><?php echo $row1[0]?> 다음에</option>
 					<?php endwhile?>
 					</select>

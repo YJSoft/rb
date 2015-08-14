@@ -1,4 +1,4 @@
-<?php if ($where && $value) $list = mysql_fetch_array(mysql_query("SELECT * FROM $Xtbl WHERE $where='$value'" , $DB_CONNECT))?>
+<?php if ($where && $value) $list = mysqli_fetch_array(mysqli_query($DB_CONNECT,"SELECT * FROM $Xtbl WHERE $where='$value'"))?>
 
 <div id="dbmodify">
 
@@ -31,8 +31,8 @@
 		<tbody>
 
 	<?php 
-	$i = 0; $result = mysql_db_query($DB['name'], "SHOW FIELDS FROM $Xtbl");
-	while ($row = mysql_fetch_array($result)) :
+	$i = 0; $result = mysqli_query($DB_CONNECT, "SHOW FIELDS FROM $Xtbl");
+	while ($row = mysqli_fetch_array($result)) :
 
 		$field_name = $row[0];
 		$field_kind = explode(" ", $row[1]);

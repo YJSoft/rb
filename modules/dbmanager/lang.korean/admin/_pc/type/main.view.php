@@ -31,7 +31,7 @@ else {$TPG = 1;}
 $start_num = ($p-1)*$recnum;
 
 $table_data = db_query("SELECT * FROM $Xtbl $WHEREIS $st LIMIT $start_num,$recnum",$DB_CONNECT);
-$field_num = mysql_num_fields($table_data);
+$field_num = mysqli_num_fields($table_data);
 ?>
 
 
@@ -77,7 +77,7 @@ $field_num = mysql_num_fields($table_data);
 			<a href="<?php echo $g['adm_href']?>&amp;type=view&amp;Xtbl=<?php echo $Xtbl?>&amp;sort=<?php echo $val?>&amp;p=<?php echo $p?>&amp;where=<?php echo $where?>&amp;sort=<?php echo $sort?>&amp;orderby=<?php echo $orderby?>&amp;search_type=<?php echo $search_type?>&amp;recn=<?php echo $recnum?>&amp;keyword=<?php echo $_keyword?>"><img src="<?php echo $g['img_module_admin']?>/cuttext.gif" alt="일부보이기" /></a>
 			<?php endif?>	
 		</th>
-	<?php for($j = 0; $j < $field_num; $j++):$val=mysql_field_name($table_data,$j)?>
+	<?php for($j = 0; $j < $field_num; $j++):$val=mysqli_fetch_field_direct($table_data, $j)->name?>
 		<th scope="col"<?php if($j < $field_num-1):?> class="split"<?php endif?>>
 			<a href="<?php echo $g['adm_href']?>&amp;type=view&amp;Xtbl=<?php echo $Xtbl?>&amp;sort=<?php echo $val?>&amp;p=<?php echo $p?>&amp;where=<?php echo $where?>&amp;sort=<?php echo $val?>&amp;orderby=<?php echo $orderby?>&amp;search_type=<?php echo $search_type?>&amp;recn=<?php echo $recnum?>&amp;keyword=<?php echo $_keyword?>">
 			<b><?php echo $val?></b>
@@ -89,8 +89,8 @@ $field_num = mysql_num_fields($table_data);
 		
 		<tbody>
 
-	<?php $gque = mysql_field_name($table_data,0)?>
-	<?php $i = 0; while($list = mysql_fetch_array($table_data)):?>
+	<?php $gque = mysqli_fetch_field_direct($table_data,0)->name?>
+	<?php $i = 0; while($list = db_fetch_array($table_data)):?>
 		<tr class="<?php if(!($i%2)):?>x1<?php else:?>x2<?php endif?>">
 			<td class="c"><a href="<?php echo $g['adm_href']?>&amp;type=modify&amp;Xtbl=<?php echo $Xtbl?>&amp;where=<?php echo $gque?>&amp;value=<?php echo $list[0]?>&amp;p=<?php echo $p?>" class="u">수정</a></td>
 			<td class="c"><a class="hand u" onclick="return RecordDelCheck('<?php echo $module?>','<?php echo $Xtbl?>','<?php echo $gque?>','<?php echo $list[0]?>','<?php echo $p?>');">삭제</a></td>
